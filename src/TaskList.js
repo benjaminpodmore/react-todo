@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import Task from "./Task";
 
-const TaskList = () => {
+import "./TaskList.css";
+
+const TaskList = ({ type }) => {
   const initialTasks = JSON.parse(window.localStorage.getItem("tasks"));
 
   const [count, setCount] = useState(1);
+
   const [tasks, setTasks] = useState(
     initialTasks || [{ id: 0, name: "", completed: false, active: true }]
   );
@@ -58,11 +61,15 @@ const TaskList = () => {
   };
 
   return (
-    <>
-      <button onClick={addTask}>Add Task</button>
+    <div className="TaskList">
+      {type === "todo" && (
+        <button onClick={addTask} className="TaskList-Add">
+          Add Task
+        </button>
+      )}
       {tasks.map(
         (task) =>
-          !task.completed &&
+          (task.completed ? !(type === "todo") : type === "todo") &&
           task.active && (
             <Task
               key={task.id}
@@ -71,11 +78,14 @@ const TaskList = () => {
               updateTaskName={updateTaskName}
               updateTaskCompleted={updateTaskCompleted}
               updateTaskActive={updateTaskActive}
+              completed={task.completed}
             />
           )
       )}
-      <button onClick={clearTasks}>Clear All Tasks</button>
-    </>
+      <button onClick={clearTasks} className="TaskList-Clear">
+        Clear All Tasks
+      </button>
+    </div>
   );
 };
 

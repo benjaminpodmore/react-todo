@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Task = ({ id, name, updateTaskName, updateTaskCompleted, updateTaskActive }) => {
+import "./Task.css";
+
+const Task = ({
+  id,
+  name,
+  updateTaskName,
+  updateTaskCompleted,
+  updateTaskActive,
+  completed,
+}) => {
   const handleTaskChange = (e) => {
     // setName(e.target.value);
     updateTaskName(id, e.target.value);
@@ -15,8 +24,13 @@ const Task = ({ id, name, updateTaskName, updateTaskCompleted, updateTaskActive 
   };
 
   return (
-    <div>
-      <input type="text" value={name} onChange={handleTaskChange}></input>
+    <div className="Task">
+      <input
+        type="text"
+        value={name}
+        onChange={handleTaskChange}
+        disabled={completed}
+      ></input>
       <button onClick={handleTaskCompleted}>Complete</button>
       <button onClick={handleTaskActive}>Delete</button>
     </div>

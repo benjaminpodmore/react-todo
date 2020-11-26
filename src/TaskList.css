@@ -1,0 +1,15 @@
+.TaskList {
+    border-style: solid;
+    border-width: 1.5px;
+    border-radius: 10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding:5px;
+}
+
+
+.TaskList-Add, .TaskList-Clear {
+    margin-left:50px;
+}
