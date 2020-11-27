@@ -31,7 +31,7 @@ const Task = ({
         onChange={handleTaskChange}
         disabled={completed}
       ></input>
-      <button onClick={handleTaskCompleted}>Complete</button>
+      {!completed && <button onClick={handleTaskCompleted}>Complete</button>}
       <button onClick={handleTaskActive}>Delete</button>
     </div>
   );

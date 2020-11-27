@@ -7,7 +7,9 @@ import "./TaskList.css";
 const TaskList = ({ type }) => {
   const initialTasks = JSON.parse(window.localStorage.getItem("tasks"));
 
-  const [count, setCount] = useState(1);
+  const initialCount = JSON.parse(window.localStorage.getItem("count"));
+
+  const [count, setCount] = useState(initialCount || 1);
 
   const [tasks, setTasks] = useState(
     initialTasks || [{ id: 0, name: "", completed: false, active: true }]
@@ -26,8 +28,23 @@ const TaskList = ({ type }) => {
   };
 
   const clearTasks = () => {
-    setTasks([{ id: 0, name: "", completed: false, active: true }]);
-    setCount(1);
+    if (type === "todo") {
+      const newTasks = tasks.map((task) => {
+        if (!task.completed) {
+          return { ...task, active: false };
+        }
+        return task;
+      });
+      setTasks(newTasks);
+    } else if (type === "completed") {
+      const newTasks = tasks.map((task) => {
+        if (task.completed) {
+          return { ...task, active: false };
+        }
+        return task;
+      });
+      setTasks(newTasks);
+    }
   };
 
   const updateTaskName = (id, newName) => {
@@ -83,7 +100,7 @@ const TaskList = ({ type }) => {
           )
       )}
       <button onClick={clearTasks} className="TaskList-Clear">
-        Clear All Tasks
+        {type === "todo" ? "Clear Todos" : "Clear Completed"}
       </button>
     </div>
   );
